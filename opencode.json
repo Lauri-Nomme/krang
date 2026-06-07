@@ -5,7 +5,6 @@
     "krang-planner": {
       "description": "Analyzes PR and JIRA to produce ranked mutation candidates",
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
       "temperature": 0.1,
       "permission": {
         "edit": "deny",
@@ -24,7 +23,6 @@
     "krang-executor": {
       "description": "Applies a single mutation patch, builds, runs tests, reports outcome",
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
       "temperature": 0.1,
       "permission": {
         "edit": "allow",
@@ -35,7 +33,6 @@
     "krang-replanner": {
       "description": "Given prior results, generates next batch of mutation candidates avoiding duplicates",
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
       "temperature": 0.1,
       "permission": {
         "edit": "deny",
@@ -54,7 +51,6 @@
     "krang": {
       "description": "Orchestrates full mutation testing cycle: delegates to @krang-planner, @krang-executor, @krang-replanner",
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-6",
       "temperature": 0.1,
       "permission": {
         "edit": "deny",

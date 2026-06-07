@@ -4,7 +4,6 @@ description: >
   mutation patch, builds, runs tests, and reports structured outcome. Use when
   a mutation candidate needs to be applied and tested in isolation.
 mode: subagent
-model: anthropic/claude-sonnet-4-6
 temperature: 0.1
 permission:
   edit: allow

@@ -4,7 +4,6 @@ description: >
   full cycle: delegates planning to @krang-planner, execution to
   @krang-executor, and replanning to @krang-replanner. Reports survivors.
 mode: subagent
-model: anthropic/claude-sonnet-4-6
 temperature: 0.1
 permission:
   edit: deny

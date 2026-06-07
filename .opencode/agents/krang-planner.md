@@ -4,7 +4,6 @@ description: >
   results to produce ranked mutation candidates that test whether changed
   behavior is actually protected by tests.
 mode: subagent
-model: anthropic/claude-sonnet-4-6
 temperature: 0.1
 permission:
   edit: deny

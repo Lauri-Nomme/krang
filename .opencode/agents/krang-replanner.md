@@ -4,7 +4,6 @@ description: >
   state and latest execution results, generates new mutation candidates that
   avoid duplicates and prioritize unexplored or high-value clusters.
 mode: subagent
-model: anthropic/claude-sonnet-4-6
 temperature: 0.1
 permission:
   edit: deny
