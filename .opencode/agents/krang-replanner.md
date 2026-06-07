@@ -6,15 +6,13 @@ description: >
 mode: subagent
 temperature: 0.1
 permission:
-  edit: deny
-  write: deny
-  bash:
-    "*": ask
-    "git diff*": allow
-    "git log*": allow
-    "git show*": allow
-    "grep *": allow
-    "rg *": allow
+  edit: allow
+  write: allow
+  bash: allow
+  read: allow
+  glob: allow
+  grep: allow
+  list: allow
 ---
 
 You are replanning for the next mutation batch.
