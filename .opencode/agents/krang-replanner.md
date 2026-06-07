@@ -74,6 +74,7 @@ Output schema:
       "mutated_behavior": "string",
       "expected_test_signal": "string",
       "suggested_test_scope": ["string"],
+      "recommended_test": "Description of what new test to write to cover this gap, e.g. 'Add a test that calls propagateTSIGKey twice and verifies the key is not overwritten'",
       "equivalent_mutant_risk": "low|medium|high",
       "compile_confidence": 0.0,
       "semantic_value": 0.0,
