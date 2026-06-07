@@ -50,9 +50,27 @@
           "rg *": "allow"
         }
       }
+    },
+    "krang": {
+      "description": "Orchestrates full mutation testing cycle: delegates to @krang-planner, @krang-executor, @krang-replanner",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-6",
+      "temperature": 0.1,
+      "permission": {
+        "edit": "deny",
+        "write": "deny",
+        "bash": "allow",
+        "task": {
+          "krang-*": "allow"
+        }
+      }
     }
   },
-  "commands": {
+  "command": {
+    "krang": {
+      "description": "Run a full mutation testing cycle: plan, execute, replan, report",
+      "prompt": "Run @krang to orchestrate the complete mutation testing workflow."
+    },
     "krang-plan": {
       "description": "Run the mutation planner on the current PR",
       "prompt": "Run the krang-planner subagent to analyze the current PR diff and JIRA context, then produce ranked mutation candidates. Pass all relevant context (git log, git diff, JIRA ticket text) in the task prompt."
@@ -67,7 +85,7 @@
     },
     "krang-run": {
       "description": "Run a full mutation testing cycle: plan, execute, replan",
-      "prompt": "Run a complete mutation testing cycle. First run krang-planner to get candidates, then run krang-executor for each candidate, then run krang-replanner if needed. Report the full results."
+      "prompt": "Delegate to @krang for the complete mutation testing cycle."
     }
   }
 }
