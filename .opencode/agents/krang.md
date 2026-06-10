@@ -25,7 +25,15 @@ Your job is to coordinate the full mutation testing cycle by delegating to speci
 
 1. **Plan** — Invoke @krang-planner with the JIRA ticket, PR diff, git context, and any prior state. Receive ranked mutation candidates (plan.json).
 
-2. **Execute** — For each candidate in rank order, invoke @krang-executor with the candidate JSON and repository build/test instructions. Collect each result.
+2. **Execute** — Launch executors in parallel using git worktrees:
+   a. Read candidates from `.krang/plan.json`.
+   b. For each candidate, launch a @krang-executor task with:
+      - The candidate JSON (including patch_unified_diff)
+      - The project_root (absolute path to the repo)
+      - Repository build/test instructions
+   c. Launch all executors concurrently, one per candidate.
+   d. Collect results as they complete and write them to `.krang/results.json`.
+   e. Never reuse a worktree — each executor creates and destroys its own.
 
 3. **Replan** — If the candidate queue is exhausted or quality drops, invoke @krang-replanner with prior state + latest results to generate the next batch. Return to step 2.
 
