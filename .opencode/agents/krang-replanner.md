@@ -32,9 +32,9 @@ Instructions:
 - If a cluster produced a survivor, allow one adjacent mutation family in that same cluster.
 - If compile failures exceeded 30% in the last batch, reduce aggressiveness and favor simpler mutations.
 - If all recent mutations were killed, shift attention to untested-looking clusters or weaker changed-test areas.
-- Output valid JSON only in the planner schema (same as krang-planner).
+- Generate the JSON using the planner schema (same as krang-planner), save it to .krang/plan.json using the write tool (create .krang/ if needed), then output ONLY the path to the saved file. Do not output the JSON content in your response.
 
-Output schema:
+Output schema (for the file content, not your response):
 ```json
 {
   "analysis_version": "string",
