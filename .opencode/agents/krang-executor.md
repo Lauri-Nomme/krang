@@ -38,24 +38,31 @@ Execution rules:
 3. If patch apply fails, skip build/test and report "patch_apply_failed".
 4. Record exact file and line targets after patch application.
 5. Run build/compile first.
-6. Run suggested_test_scope first.
-7. If suggested_test_scope passes and policy allows, run broader PR-related tests.
-8. Capture:
+6. Run suggested_test_scope first (Tier 1 — targeted tests).
+7. If Tier 1 tests fail, the mutation is killed. Skip Tier 2 and report "killed".
+8. If Tier 1 tests pass (survivor candidate), escalate to Tier 2:
+   a. Run the full project test suite (e.g. `./gradlew test` or the project's equivalent
+      full-test command from the repository build instructions) to confirm survival.
+   b. If Tier 2 tests fail, report "killed". Note in summary that Tier 1 was insufficient
+      and which Tier 2 tests caught the mutation — this signals the suggested_test_scope
+      was too narrow.
+   c. If Tier 2 tests also pass, report "survived" with high confidence.
+9. Capture:
    - compile status
-   - test commands run
+   - test commands run (both Tier 1 and Tier 2 if escalated)
    - failing tests
    - stderr/stdout snippets
    - classification
-9. Save artifacts to `<project_root>/.krang/artifacts/<candidate_id>/`:
-   - Create the directory with `mkdir -p <project_root>/.krang/artifacts/<candidate_id>/`.
-   - Save build log, test log, and the applied patch diff.
-   - Update the artifact paths in the output JSON accordingly.
-10. Clean up:
+10. Save artifacts to `<project_root>/.krang/artifacts/<candidate_id>/`:
+    - Create the directory with `mkdir -p <project_root>/.krang/artifacts/<candidate_id>/`.
+    - Save build log, test log, and the applied patch diff.
+    - Update the artifact paths in the output JSON accordingly.
+11. Clean up:
     a. cd back to the project root.
     b. Run `git worktree remove --force <worktree_path>`.
     c. Run `git worktree prune`.
-11. Never silently modify the mutation.
-12. Output ONLY valid JSON matching the schema below.
+12. Never silently modify the mutation.
+13. Output ONLY valid JSON matching the schema below.
 
 Output schema:
 ```json
@@ -65,6 +72,7 @@ Output schema:
   "apply_result": "applied|patch_apply_failed",
   "compile_result": "passed|failed|not_run",
   "test_result": "killed|survived|flaky|not_run",
+  "killed_by_tier": "tier1|tier2|null",
   "equivalent_suspect": true,
   "outcome_confidence": 0.0,
   "commands": [
